@@ -1,254 +1,133 @@
-/*
- * @file: style.css
- * @description: Este archivo contiene los estilos para la aplicación de chatbot. 
- *              Define la apariencia de la interfaz de chat, los mensajes y los controles. 
- *              También incluye un tema oscuro y un diseño adaptable.
- */
+  /* Estilos generales para el layout de chat */
+  body {
+      background-color: #f8f9fa;
+      /* Fondo gris claro */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+  }
 
- :root {
-     /* Define las variables de color para los temas claro y oscuro. */
-     --chat-bg-light: rgba(255, 255, 255, 0.75);
-     --chat-bg-dark: rgba(36, 37, 38, 0.7);
-     --text-color-light: #212529;
-     --text-color-dark: #e4e6eb;
-     --border-color-light: rgba(0, 0, 0, 0.07);
-     --border-color-dark: rgba(255, 255, 255, 0.1);
-     --user-msg-bg-light: #0d6efd;
-     --user-msg-bg-dark: #0a58ca;
-     --bot-msg-bg-light: rgba(241, 243, 245, 0.9);
-     --bot-msg-bg-dark: rgba(58, 59, 60, 0.85);
- }
+  .chat-widget {
+      width: 97%;
+      max-width: 700px;
+      /* Ancho máximo para el widget */
+      height: 80vh;
+      /* Altura fija para el contenedor del chat */
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #fff;
+  }
 
- @keyframes space-gradient {
-     /* Animación de fotogramas clave para el fondo degradado. */
-     0% {
-         background-position: 0% 50%;
-     }
+  .chat-header {
+      background-color: #007bff;
+      /* Color principal de Bootstrap */
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.25rem;
+  }
 
-     50% {
-         background-position: 100% 50%;
-     }
+  /* Contenedor del Historial de Mensajes */
+  #chat-box {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      /* Espacio entre mensajes */
+  }
 
-     100% {
-         background-position: 0% 50%;
-     }
- }
+  /* Mensajes */
+  .message {
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 18px;
+      line-height: 1.4;
+      word-wrap: break-word;
+  }
 
- body {
-     /* Estilos para el cuerpo, incluido el fondo degradado animado. */
-     color: var(--text-color-light);
-     background: linear-gradient(-45deg, #0b021a, #2a0a4a, #0b021a, #4a148c);
-     background-size: 400% 400%;
-     animation: space-gradient 25s ease infinite;
-     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
- }
+  .user-message {
+      align-self: flex-end;
+      /* Alinea a la derecha */
+      background-color: #007bff;
+      color: white;
+      border-bottom-right-radius: 3px;
+  }
 
- body.dark-mode {
-     /* Estilos para el modo oscuro. */
-     color: var(--text-color-dark);
- }
+  .bot-message {
+      align-self: flex-start;
+      /* Alinea a la izquierda */
+      background-color: #e9ecef;
+      /* Gris claro */
+      color: #343a40;
+      /* Texto oscuro */
+      border-bottom-left-radius: 3px;
+      position: relative;
+      /* Para posicionar los botones */
+      padding-right: 60px;
+      /* Espacio para los botones */
+  }
 
- .chat-container {
-     /* Estilos para el contenedor de chat principal. */
-     max-width: 800px;
-     margin: 2.5vh auto;
-     border-radius: 15px;
-     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-     backdrop-filter: blur(12px);
-     -webkit-backdrop-filter: blur(12px);
-     background-color: var(--chat-bg-light);
-     border: 1px solid var(--border-color-light);
-     display: flex;
-     flex-direction: column;
-     height: 95vh;
- }
+  /* Contenedor de entrada */
+  .chat-input-area {
+      padding: 15px;
+      border-top: 1px solid #dee2e6;
+      display: flex;
+      align-items: flex-end;
+      /* Alinea el botón con la parte inferior del textarea */
+  }
 
- body.dark-mode .chat-container {
-     /* Estilos del contenedor de chat para el modo oscuro. */
-     background-color: var(--chat-bg-dark);
-     border: 1px solid var(--border-color-dark);
- }
+  #user-input {
+      flex-grow: 1;
+      resize: none;
+      /* Deshabilita el redimensionamiento manual */
+      border-radius: 20px;
+      margin-right: 10px;
+  }
 
- .chat-header {
-     /* Estilos para el encabezado del chat. */
-     padding: 1rem;
-     border-bottom: 1px solid var(--border-color-light);
-     border-radius: 15px 15px 0 0;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     font-weight: 500;
- }
+  /* Botones de acción del mensaje (Copiar/Voz) */
+  .message-buttons {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      display: flex;
+      gap: 5px;
+      font-size: 0.9rem;
+  }
 
- body.dark-mode .chat-header {
-     /* Estilos de encabezado de chat para el modo oscuro. */
-     border-bottom: 1px solid var(--border-color-dark);
- }
+  .msg-btn {
+      cursor: pointer;
+      color: #6c757d;
+      transition: color 0.2s;
+  }
 
- .chat-box {
-     /* Estilos para el cuadro de chat donde se muestran los mensajes. */
-     flex-grow: 1;
-     overflow-y: auto;
-     padding: 20px;
- }
+  .msg-btn:hover {
+      color: #007bff;
+  }
 
- .message {
-     /* Estilos para elementos de mensaje individuales. */
-     margin-bottom: 15px;
-     max-width: 100%;
-     word-wrap: break-word;
-     position: relative;
-     display: flex;
-     flex-direction: column;
- }
+  /* Estilo para el código dentro de la respuesta del bot */
+  .bot-message pre code {
+      display: block;
+      padding: 0;
+      background: none;
+      border: none;
+      color: inherit;
+      white-space: pre-wrap;
+      /* Asegura el ajuste de línea */
+      font-family: monospace;
+  }
 
- .user-message {
-     /* Estilos para los mensajes enviados por el usuario. */
-     background-color: var(--user-msg-bg-light);
-     color: white;
-     margin-left: auto;
-     border-radius: 20px 5px 20px 20px;
-     padding: 10px 15px;
-     align-self: flex-end;
-     max-width: 90%;
- }
-
- .bot-message {
-     /* Estilos para los mensajes recibidos del bot. */
-     align-self: flex-start;
-     max-width: 90%;
-     position: relative;
-     padding-top: 25px;
-     /* Espacio para botones */
- }
-
- .bot-message pre {
-     /* Estilos para el contenido del mensaje del bot. */
-     background-color: var(--bot-msg-bg-light);
-     color: var(--text-color-light);
-     border-radius: 5px 20px 20px 20px;
-     padding: 10px 15px;
-     white-space: pre-wrap;
-     word-wrap: break-word;
-     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-     font-size: 0.95em;
-     margin: 0;
- }
-
- body.dark-mode .user-message {
-     /* Estilos de mensaje de usuario para el modo oscuro. */
-     background-color: var(--user-msg-bg-dark);
- }
-
- body.dark-mode .bot-message pre {
-     /* Estilos de mensaje de bot para el modo oscuro. */
-     background-color: var(--bot-msg-bg-dark);
-     color: var(--text-color-dark);
- }
-
- .input-group {
-     /* Estilos para el grupo de entrada donde el usuario escribe. */
-     padding: 10px;
-     border-top: 1px solid var(--border-color-light);
-     display: flex;
-     align-items: flex-end;
- }
-
- body.dark-mode .input-group {
-     /* Estilos de grupo de entrada para el modo oscuro. */
-     border-top: 1px solid var(--border-color-dark);
- }
-
- #user-input {
-     /* Estilos para el campo de entrada de texto. */
-     resize: none;
-     overflow-y: auto;
-     max-height: 150px;
-     border-radius: 20px;
-     background-color: var(--bot-msg-bg-light);
-     color: var(--text-color-light);
-     border: 1px solid var(--border-color-light);
-     padding: 10px 15px;
-     flex-grow: 1;
- }
-
- body.dark-mode #user-input {
-     /* Estilos de entrada de usuario para el modo oscuro. */
-     background-color: var(--bot-msg-bg-dark);
-     color: var(--text-color-dark);
-     border-color: var(--border-color-dark);
- }
-
- #user-input::placeholder {
-     /* Estilos para el texto del marcador de posición. */
-     color: #6c757d;
- }
-
- #send-button {
-     /* Estilos para el botón de envío. */
-     border-radius: 50%;
-     width: 45px;
-     height: 45px;
-     margin-left: 10px;
-     flex-shrink: 0;
- }
-
- .theme-switch {
-     /* Estilos para el icono de cambio de tema. */
-     cursor: pointer;
-     font-size: 1.2rem;
- }
-
- .message-buttons {
-     /* Estilos para los botones de control en los mensajes del bot. */
-     position: absolute;
-     top: 0;
-     right: 0;
-     display: flex;
-     gap: 8px;
-     z-index: 10;
- }
-
- .msg-btn {
-     /* Estilos para los botones de mensajes individuales (copiar, hablar). */
-     cursor: pointer;
-     color: #888;
-     font-size: 0.9rem;
-     background: var(--bot-msg-bg-light);
-     border: 1px solid var(--border-color-light);
-     border-radius: 5px;
-     padding: 2px 6px;
-     transition: all 0.2s;
- }
-
- .msg-btn:hover {
-     /* Estilos de desplazamiento para los botones de mensajes. */
-     color: #0d6efd;
-     border-color: #0d6efd;
- }
-
- body.dark-mode .msg-btn {
-     /* Estilos de botón de mensaje para el modo oscuro. */
-     color: #999;
-     background: var(--bot-msg-bg-dark);
-     border-color: var(--border-color-dark);
- }
-
- body.dark-mode .msg-btn:hover {
-     /* Estilos de desplazamiento de botones de mensaje para el modo oscuro. */
-     color: #589cff;
-     border-color: #589cff;
- }
-
- @media (max-width: 768px) {
-     /* Consultas de medios para un diseño adaptable en pantallas más pequeñas. */
-     .chat-container {
-         margin: 0;
-         height: 100vh;
-         border-radius: 0;
-     }
-
-     .user-message, .bot-message {
-         max-width: 95%;
-     }
- }
+  .dark-mode {
+      /*  estilos del modo dark  */
+      background-color: #343a40;
+      color: #ffffff;
+  }
